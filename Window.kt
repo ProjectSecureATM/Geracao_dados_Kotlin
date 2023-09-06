@@ -1,6 +1,8 @@
 import java.io.File
 fun main() {
 
+
+
     val nome = "CapturaDadosPy.py"
 
     var arq = File(nome)
@@ -80,7 +82,7 @@ fun main() {
     // create a new file
     arqBash.writeText("@\"%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command \"iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))\" && SET \"PATH=%PATH%;%ALLUSERSPROFILE%\\chocolatey\\bin\"\n\n" +
             "choco install -y python3 \n" +
-            "python --version \n" +
+            "choco install python311 --params \"/C:\\Users\\Public\"" +
             "cd "
     )
 
