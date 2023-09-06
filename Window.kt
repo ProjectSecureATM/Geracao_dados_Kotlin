@@ -1,8 +1,11 @@
 import java.io.File
 fun main() {
+val senhaCorr = 123
 
 
+}
 
+fun install(){
     val nome = "CapturaDadosPy.py"
 
     var arq = File(nome)
@@ -75,14 +78,19 @@ fun main() {
             "    i += 1\n" +
             "    time.sleep(5)")
 
-    val nomeBash = "Install.bat"
+    val nomeBash = "InstallPython.bat"
 
     var arqBash = File(nomeBash)
 
     // create a new file
     arqBash.writeText("@\"%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command \"iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))\" && SET \"PATH=%PATH%;%ALLUSERSPROFILE%\\chocolatey\\bin\"\n\n" +
-            "choco install python311 --params \"/C:\\Users\\Public\"" +
-            "cd "
-    )
+            "choco install python311 --params \"/C:\\Users\\Public\"")
+
+    val nomePyDep = "InstallPythonDependency.bat"
+
+    var arqBash2 = File(nomePyDep)
+
+    // create a new file
+    arqBash2.writeText("")
 
 }
