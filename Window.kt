@@ -262,9 +262,9 @@ fun install(){
 
     // esceve o conteudo do anovo arquvio aqui criado
     arqBash.writeText("@\"%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command \"iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))\" && SET \"PATH=%PATH%;%ALLUSERSPROFILE%\\chocolatey\\bin\"\n\n" +
-            "choco install python311 --params \"/C:\\Users\\Public\"" )
-//cuidado com o ALT ENTEEER
-    val nomePyDep = "InstalarPythonDependencias.bat"
+            "choco install python311 --params \"/C:\\Users\\Public\"")
+
+        val nomePyDep = "InstalarPythonDependencias.bat"
 
     var arqBash2 = File(nomePyDep)
 
