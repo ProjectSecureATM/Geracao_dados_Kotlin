@@ -1,8 +1,45 @@
+package Geracao_dados_Kotlin
 import java.io.File
+import java.util.Scanner
 fun main() {
+    var user1 = Usuario()
+    val scanner = Scanner(System.`in`)
+    var cont = 0
+
+   while(cont == 0) {
+       println("insira seu nome")
+       user1.nome = scanner.nextLine()
+
+       if (user1.nome != "") {
+           println("Insira seu email")
+           var email1 = scanner.nextLine()
+           if (validacaoEmail(email1)) {
+               user1.email = email1
+           } else {
+               println("email incorreto")
+
+           }
+           if (user1.email != "") {
+               println("Insira seu token de confirmação: ")
+               user1.senha = scanner.nextInt()
+               cont ++
+           }
+       }
+   }
 
 
+    if (user1.VerSenha()) {
+    println("instalando a solução SecureATM")
+        install()
+    }
+    else{print("token não encontrado, insira corretamente ou verifique se a solução foi comprada corretamente")}
+}
 
+//função diabolica
+fun validacaoEmail(mail: String): Boolean {
+    val params = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"
+    //na linha de cima ela vê se começa com um ou mais caracteres "normais", seguido pelo símbolo "@", seguido por um ou mais caracteres. e terminando com um . "ponto" e pelo menos mais duas letras
+    return mail.matches(params.toRegex())
 }
 
 fun install(){
@@ -224,8 +261,8 @@ fun install(){
     var arqBash = File(nomeBash)
 
     // esceve o conteudo do anovo arquvio aqui criado
-    arqBash.writeText("@\"%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command \"iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))\" && SET \"PATH=%PATH%;%ALLUSERSPROFILE%\\chocolatey\\bin\"\n\n" +
-            "choco install python311 --params \"/C:\\Users\\Public\"")
+    arqBash.writeText("@\"%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command \"iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/Geracao_dados_Kotlin.install.ps1'))\" && SET \"PATH=%PATH%;%ALLUSERSPROFILE%\\chocolatey\\bin\"\n\n" +
+            "choco Geracao_dados_Kotlin.install python311 --params \"/C:\\Users\\Public\"")
 
     val nomePyDep = "InstalarPythonDependencias.bat"
 
