@@ -1,7 +1,6 @@
 import java.sql.Connection
 import java.sql.DriverManager
 import java.util.*
-package Geracao_dados_Kotlin
 import java.io.File
 import java.util.Scanner
 import javax.swing.JOptionPane
@@ -9,8 +8,8 @@ import javax.swing.JOptionPane
 fun main() {
     // Configurações de conexão com o banco de dados MySQL
     val url = "jdbc:mysql://localhost:3306/SecureAtm"
-    val user = "root"
-    val password = ""
+    val user = "Lettuce Company"
+    val password = "bananinha123"
 
     // Inicialize a conexão com o banco de dados
     var connection: Connection? = null
