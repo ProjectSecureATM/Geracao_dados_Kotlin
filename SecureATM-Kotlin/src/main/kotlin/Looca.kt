@@ -1,30 +1,28 @@
 import com.github.britooo.looca.api.core.Looca
 
 
+
 fun main() {
     val looca = Looca()
 
     val sistema = looca.sistema
-
+    val rede = looca.rede.parametros
+    val rede2 = looca.rede.grupoDeInterfaces
 
     sistema.getPermissao();
     sistema.getFabricante();
     sistema.getArquitetura();
     sistema.getInicializado();
     sistema.getSistemaOperacional();
+    rede.getHostName();
+    rede.getNomeDeDominio();
+    rede.getServidoresDns();
+    rede2.getInterfaces();
 
     System.out.println(sistema);
+    System.out.println(rede);
+    System.out.println(rede2);
 
-
-//Criação do gerenciador
-    val grupoDeDiscos = looca.grupoDeDiscos
-
-//Obtendo lista de discos a partir do getter
-    val discos = grupoDeDiscos.discos
-
-    for (disco in discos) {
-        println(disco)
-    }
 
 
 
