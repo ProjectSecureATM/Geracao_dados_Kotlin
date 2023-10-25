@@ -1,6 +1,7 @@
 package app
 
 import com.github.britooo.looca.api.core.Looca
+import java.sql.*
 import java.util.*
 
 
@@ -10,17 +11,25 @@ open class Main {
 
             val looca = Looca()
 
-            val redebytesenviados = looca.rede.grupoDeInterfaces.interfaces.get(0).bytesEnviados.toFloat() / (1024 * 1024);
-            val redebytesrecebidos = looca.rede.grupoDeInterfaces.interfaces.get(0).bytesRecebidos.toFloat() / (1024 * 1024);
 
             val grupoProcesssos = looca.grupoDeProcessos
+
+
+
 
             println("Iniciado!")
 
             Timer().schedule(object : TimerTask() {
                 override fun run() {
 
+
+
                     grupoProcesssos.processos.forEachIndexed { p, processo ->
+                        val nomeProcesso = processo.nome
+                        val pidProcesso = processo.pid
+
+                        insertData(pidProcesso, nomeProcesso)
+
                         println("""
             Nome: ${processo.nome}
             PID: ${processo.pid}
@@ -28,19 +37,10 @@ open class Main {
         """.trimIndent())
                     }
 
-                    println("""
-             Total de processos: ${grupoProcesssos.totalProcessos}    
-             Total de threads: ${grupoProcesssos.totalThreads}    
-             """.trimIndent())
-
-                    println("""
-               Bytes Enviados: ${redebytesenviados}
-               Bytes Recebidos: ${redebytesrecebidos}
-           """.trimIndent())
-
                     monitoramento()
+
                 }
-            }, 600000)
+            }, 2000)
         }
     }
 }
@@ -48,9 +48,6 @@ open class Main {
 fun monitoramento(){
 
     val looca = Looca()
-
-    val redebytesenviados = looca.rede.grupoDeInterfaces.interfaces.get(0).bytesEnviados.toFloat() / (1024 * 1024);
-    val redebytesrecebidos = looca.rede.grupoDeInterfaces.interfaces.get(0).bytesRecebidos.toFloat() / (1024 * 1024);
 
 
     val grupoProcesssos = looca.grupoDeProcessos
@@ -62,19 +59,32 @@ fun monitoramento(){
         """.trimIndent())
     }
 
-    println("""
-             Total de processos: ${grupoProcesssos.totalProcessos}    
-             Total de threads: ${grupoProcesssos.totalThreads}    
-             """.trimIndent())
-
-    println("""
-               Bytes Enviados: ${redebytesenviados}
-               Bytes Recebidos: ${redebytesrecebidos}
-           """.trimIndent())
     Timer().schedule(object : TimerTask() {
         override fun run() {
                 monitoramento() // agendando a própria função
-
         }
-    }, 600000)
+    }, 2000)
+}
+
+fun insertData(pidProcesso: Int, nomeProcesso: String) {
+    val jdbcUrl = "jdbc:mysql://localhost:3306/secureatm"
+    val user = "root"
+    val password = "fgandb25"
+
+    try {
+
+        val connection: Connection = DriverManager.getConnection(jdbcUrl, user, password)
+
+        val sql = "INSERT INTO processos(PID, nome, fkATM) VALUES (?, ?, 1)"
+
+        val preparedStatement: PreparedStatement = connection.prepareStatement(sql)
+        preparedStatement.setInt(1, pidProcesso)
+        preparedStatement.setString( 2, nomeProcesso)
+
+        preparedStatement.executeUpdate()
+        connection.close()
+    } catch (e: SQLException) {
+        e.printStackTrace()
+        println("Erro ao inserir os dados no banco de dados.")
+    }
 }
