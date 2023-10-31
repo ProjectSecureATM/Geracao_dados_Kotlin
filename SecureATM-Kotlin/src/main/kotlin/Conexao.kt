@@ -3,27 +3,15 @@ import org.springframework.jdbc.core.JdbcTemplate
 
 class Conexao {
 
-    /*var jdbcTemplate: JdbcTemplate? = null
-        get() {
-            if (field == null) {
-                val dataSource = BasicDataSource()
-                dataSource.driverClassName = "com.mysql.cj.jdbc.Driver"
-                dataSource.url = "jdbc:mysql://localhost:3306/secureatm"
-                dataSource.username = "root"
-                dataSource.password = "fgandb25"
-                val novoJdbcTemplate = JdbcTemplate(dataSource)
-                field = novoJdbcTemplate
-            }
-            return field
-        }*/
-
     fun conectar(): JdbcTemplate {
+        // Cria um objeto DataSource usando BasicDataSource
         val dataSource = BasicDataSource()
-        dataSource.driverClassName = "com.mysql.cj.jdbc.Driver"
-        dataSource.url = "jdbc:mysql://localhost:3306/secureatm"
-        dataSource.username = "root"
-        dataSource.password = "fgandb25"
-        return JdbcTemplate(dataSource)
+        // Configura as informações de conexão com o banco de dados
+        dataSource.driverClassName = "com.mysql.cj.jdbc.Driver" // Define o driver JDBC para o MySQL
+        dataSource.url = "jdbc:mysql://localhost:3306/secureatm" // URL do banco de dados
+        dataSource.username = "root" // Nome de usuário do banco de dados
+        dataSource.password = "fgandb25" // Senha do banco de dados
+        return JdbcTemplate(dataSource) // Retorna um objeto JdbcTemplate configurado com o DataSource
     }
 
 
