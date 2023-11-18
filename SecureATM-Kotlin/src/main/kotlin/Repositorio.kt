@@ -23,6 +23,7 @@ class Repositorio {
         id INT AUTO_INCREMENT,
         PID INT,
         nome varchar(45),
+        hora DATETIME,
         fkATM INT,
         FOREIGN KEY (fkATM) REFERENCES ATM(idATM),
         CONSTRAINT pkATMAPro PRIMARY KEY (id, fkATM)
@@ -34,16 +35,17 @@ class Repositorio {
     // Função para cadastrar informações sobre um processo no banco de dados
     fun cadastrar(grupoProcesso:Processos) {
         jdbcTemplate.update("""
-            INSERT INTO processos(PID, nome, fkATM) VALUES (?, ?, 1)
+            INSERT INTO processos(PID, nome, hora, fkATM) VALUES (?, ?, ?, 1)
         """,
             grupoProcesso.PID,
-            grupoProcesso.nome
+            grupoProcesso.nome,
+            grupoProcesso.hora
         )
     }
 
     // Função para verificar a existência de um usuário com base em email e senha no banco de dados
     fun verificarUsuario(email: String, senha: String): Boolean {
-        val sql = "SELECT COUNT(*) FROM funcionario WHERE email = ? AND senha = ?"
+        val sql = "SELECT COUNT(*) FROM usuario WHERE email = ? AND senha = ?"
         val count = jdbcTemplate.queryForObject(sql, Int::class.java, email, senha)
 
         return count > 0
