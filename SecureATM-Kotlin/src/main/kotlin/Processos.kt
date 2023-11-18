@@ -5,5 +5,5 @@ class Processos {
     var id: Int = 0
     var PID: Int = 0
     var nome: String = ""
-    var hora: LocalDateTime = LocalDateTime.now()
+    var data_hora: LocalDateTime = LocalDateTime.now()
 }

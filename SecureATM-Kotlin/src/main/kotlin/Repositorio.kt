@@ -23,7 +23,7 @@ class Repositorio {
         id INT AUTO_INCREMENT,
         PID INT,
         nome varchar(45),
-        hora DATETIME,
+        data_hora DATETIME,
         fkATM INT,
         FOREIGN KEY (fkATM) REFERENCES ATM(idATM),
         CONSTRAINT pkATMAPro PRIMARY KEY (id, fkATM)
@@ -35,11 +35,11 @@ class Repositorio {
     // Função para cadastrar informações sobre um processo no banco de dados
     fun cadastrar(grupoProcesso:Processos) {
         jdbcTemplate.update("""
-            INSERT INTO processos(PID, nome, hora, fkATM) VALUES (?, ?, ?, 1)
+            INSERT INTO processos(PID, nome, data_hora, fkATM) VALUES (?, ?, ?, 1)
         """,
             grupoProcesso.PID,
             grupoProcesso.nome,
-            grupoProcesso.hora
+            grupoProcesso.data_hora
         )
     }
 
