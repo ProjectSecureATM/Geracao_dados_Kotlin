@@ -16,6 +16,7 @@ open class Main {
             val repositorio = Repositorio()
             repositorio.iniciar()
 
+
             // Solicita ao usuário que digite seu e-mail e senha
             val email = JOptionPane.showInputDialog("Olá, digite o seu e-mail:")
             val senha = JOptionPane.showInputDialog("Digite a sua senha:")
@@ -29,6 +30,16 @@ open class Main {
                     "Usuário encontrado no banco de dados.",
                     "Bem-vindo (a) novamente!",
                     JOptionPane.INFORMATION_MESSAGE)
+
+                    val idATMEscolhido = repositorio.listarIDsATMsParaEscolha()
+
+                    if (idATMEscolhido != null) {
+                        // Restante do código...
+
+                        // Agora, você pode usar 'idATMEscolhido' como a fkATM nas operações do banco de dados
+                        println("ID do ATM Escolhido: $idATMEscolhido")
+
+                    }
 
                     // Cria uma tabela no banco de dados
                     repositorio.criarTabela()
@@ -51,7 +62,9 @@ open class Main {
                                 novoProcesso.PID = pidProcesso
                                 novoProcesso.nome = nomeProcesso
                                 // Armazena informações do processo no banco de dados
-                                repositorio.cadastrar(novoProcesso)
+                                if (idATMEscolhido != null) {
+                                    repositorio.cadastrar(novoProcesso, idATMEscolhido)
+                                }
 
                     println("""
                     Nome: ${processo.nome}
@@ -62,7 +75,7 @@ open class Main {
                     // Chama a função de monitoramento após coletar informações
                     monitoramento()
                         }
-                    }, 5000)
+                    }, 30000)
                 }
 
                 else {
@@ -95,5 +108,5 @@ fun monitoramento(){
         override fun run() {
                 monitoramento() // agendando a própria função para execução periódica
         }
-    }, 2000)
+    }, 30000)
 }
