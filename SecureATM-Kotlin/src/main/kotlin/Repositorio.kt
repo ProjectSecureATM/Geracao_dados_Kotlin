@@ -14,22 +14,25 @@ class Repositorio {
 
     // Função para iniciar a conexão com o banco de dados
     fun iniciar() {
-        jdbcTemplate = Conexao().conectar() // Cria uma conexão usando a classe Conexao
+        jdbcTemplate = conectarSQL() // Cria uma conexão usando a classe Conexao
     }
 
     // Função para criar uma tabela no banco de dados
     fun criarTabela() {
         jdbcTemplate.execute(
             """
-        CREATE TABLE IF NOT EXISTS Processos (
-        id INT AUTO_INCREMENT,
+        IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'processos')
+BEGIN
+    CREATE TABLE processos (
+        id INT IDENTITY(1,1) PRIMARY KEY,
         PID INT,
-        nome varchar(45),
+        nome VARCHAR(45),
         data_hora DATETIME,
+        fkComp INT,
         fkATM INT,
-        FOREIGN KEY (fkATM) REFERENCES ATM(idATM),
-        CONSTRAINT pkATMAPro PRIMARY KEY (id, fkATM)
-        );
+        FOREIGN KEY (fkATM) REFERENCES ATM(idATM)
+    );
+END;
         """
         )
     }
