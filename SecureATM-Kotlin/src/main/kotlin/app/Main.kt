@@ -24,8 +24,52 @@ open class Main {
             if (email != null && senha != null) {
                 // Verifica se o usuário com o e-mail e senha fornecidos existe no banco de dados
                 if (repositorio.verificarUsuario(email, senha)) {
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Usuário encontrado no banco de dados MySQL.",
+                        "Bem-vindo (a) novamente!",
+                        JOptionPane.INFORMATION_MESSAGE)
 
+                    val idATMEscolhido = repositorio.listarIDsATMsParaEscolha()
+
+                    if (idATMEscolhido != null) {
+                        // Restante do código...
+
+                        // Agora, você pode usar 'idATMEscolhido' como a fkATM nas operações do banco de dados
+                        println("ID do ATM Escolhido: $idATMEscolhido")
                  }
+
+                    repositorio.criarTabela()
+                    val novoProcesso = Processos()
+                    // Cria uma instância do Looca para monitorar processos
+                    val looca = Looca()
+                    val grupoProcesso = looca.grupoDeProcessos
+                    println("Iniciado!")
+
+                    Timer().schedule(object : TimerTask() {
+                        override fun run() {
+                            // Percorre a lista de processos do sistema
+                            grupoProcesso.processos.forEachIndexed { p, processo ->
+                                val nomeProcesso = processo.nome
+                                val pidProcesso = processo.pid
+                                novoProcesso.PID = pidProcesso
+                                novoProcesso.nome = nomeProcesso
+
+                                if (idATMEscolhido != null) {
+                                    repositorio.cadastrar(novoProcesso, idATMEscolhido)
+                                }
+
+                                println("""
+                    Nome: ${processo.nome}
+                    PID: ${processo.pid}
+            
+                    """.trimIndent())
+                            }
+                    
+                     monitoramento()
+                        }
+                    }, 5000)
+                }
 
                 else {
                     // Mostra uma mensagem de erro se o usuário não existe no banco de dados
